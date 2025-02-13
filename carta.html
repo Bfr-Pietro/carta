@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Animada</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ffcc99, #ff9966);
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 0;
+            flex-direction: column;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            cursor: pointer;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 300px; /* Envelope mais grosso */
+            background: #c48237;
+            border-radius: 5px;
+            transition: transform 1s ease-in-out;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .top-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: #9c5a1a;
+            clip-path: polygon(0% 0%, 50% 100%, 100% 0%); /* Triângulo invertido */
+            transition: transform 1s ease-in-out;
+            transform-origin: top;
+        }
+        .bottom-flap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            background: #c48237;
+            clip-path: polygon(0% 0%, 50% 100%, 100% 0%); /* Triângulo invertido */
+        }
+        .letter {
+            position: absolute;
+            width: 100vw; /* Carta ocupa toda a largura da tela */
+            height: 100vh; /* Carta ocupa toda a altura da tela */
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(100%);
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+            opacity: 0;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 18px;
+            font-style: italic;
+            color: #333;
+            background: repeating-linear-gradient(white, white 24px, #a0c4ff 25px);
+            border-left: 4px solid red;
+            line-height: 24px;
+            padding-left: 10px;
+            padding-top: 5px;
+            overflow-y: auto;
+            word-wrap: break-word;
+            margin: 0 auto; /* Centraliza o texto dentro da carta */
+            max-width: 85%; /* Ajusta a largura do texto dentro da carta */
+        }
+        .open .top-flap {
+            transform: rotateX(180deg);
+        }
+        .open .letter {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @media (max-width: 600px) {
+            body {
+                padding-top: 20px;
+                justify-content: center; /* Centraliza o conteúdo em dispositivos móveis */
+                align-items: center;
+            }
+            .container {
+                width: 95%;
+                height: auto;
+                justify-content: center;
+                align-items: center;
+            }
+            .letter {
+                font-size: 16px;
+                line-height: 22px;
+                height: 100%;
+                max-height: 100%;
+                padding: 10px;
+                width: 100%;
+                max-width: 95%; /* Ajusta para dispositivos móveis */
+            }
+            .letter.fullscreen {
+                font-size: 18px;
+                padding: 20px;
+                line-height: 26px;
+                width: 100vw;
+                height: 100vh;
+            }
+            .overlay {
+                font-size: 20px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" onclick="hideOverlay()">Alguém enviou uma carta para você!<br>Clique para abrir</div>
+    <div class="container" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="top-flap"></div>
+            <div class="bottom-flap"></div>
+        </div>
+        <div class="letter">
+            Querido(a),<br><br>
+            Espero que esta carta traga um sorriso ao seu rosto. Você é especial e merece todo o carinho do mundo!<br><br>
+            A vida é uma jornada repleta de desafios e conquistas, e quero que você saiba que sempre estarei torcendo pelo seu sucesso. Que cada dia traga novas oportunidades e momentos inesquecíveis.<br><br>
+            Lembre-se de que as dificuldades fazem parte do caminho, mas sua força e determinação sempre o levarão adiante. Nunca perca a fé em si mesmo e continue seguindo seus sonhos com coragem e alegria.<br><br>
+            Que esta carta seja um lembrete do quanto você é amado e admirado. Jamais se esqueça do seu valor e do impacto positivo que tem na vida das pessoas ao seu redor.<br><br>
+            Com carinho e gratidão,<br>
+            Seu amigo(a) ❤️
+        </div>
+    </div>
+    
+    <script>
+        function hideOverlay() {
+            document.querySelector(".overlay").style.display = "none";
+            document.querySelector(".container").style.display = "flex";
+        }
+
+        function openEnvelope() {
+            document.querySelector(".container").classList.toggle("open");
+            document.querySelector(".letter").classList.add("fullscreen");
+        }
+
+        function closeLetter() {
+            document.querySelector(".letter").classList.remove("fullscreen");
+            document.querySelector(".container").classList.remove("open");
+            document.querySelector(".overlay").style.display = "flex";
+        }
+    </script>
+</body>
+</html>
